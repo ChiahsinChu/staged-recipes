@@ -38,10 +38,13 @@ def custom_process(meta_dict: Dict[str, Any]) -> Dict[str, Any]:
     Dict[str, Any]
         The processed meta.yaml content.
     """
-    # Example: Add a custom field under the 'about' section
-    # if "about" not in meta_dict:
-    #     meta_dict["about"] = {}
-    # meta_dict["about"]["custom_field"] = "custom_value"
+    # Add maintainers
+    meta_dict["extra"]["recipe-maintainers"] = ["ChiahsinChu"]
+    # Add min Python ver to host and test requirements
+    meta_dict["requirements"]["host"][0] = "python 3.10"
+    meta_dict["test"]["requires"].append("python 3.10")
+    # # Skip build on Windows
+    # meta_dict["build"]["skip"] = "win"
     return meta_dict
 
 
@@ -203,6 +206,7 @@ def main() -> None:
     shutil.copyfile(file_path, file_path.with_suffix(".yaml.bak"))
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(s)
+        f.write("\n")
 
 
 if __name__ == "__main__":
